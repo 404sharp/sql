@@ -47,11 +47,10 @@ select employee_id "Emp #", last_name "Name", job_id "Job", hire_date "Hire Date
 from employees;
 
 -- 붙이기 연산자 column name, alias, expression, constant
--- 리턴값이 character
 select last_name || job_id
 from employees;
 
--- 상수 character를 붙여 보자. 작은따옴표로 묶은 것은 character 타입이다.
+-- 상수 character를 붙여 보자. 작은따옴표로 묶인 것은 character 타입이다.
 select last_name || ' is ' || job_id
 from employees;
 
