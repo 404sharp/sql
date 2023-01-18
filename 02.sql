@@ -125,7 +125,7 @@ where job_id like '%\_R%' escape '\';
 select employee_id, last_name, manager_id
 from employees;
 
--- = null은 true값이 없다.
+-- = null은 true값이 없다. null을 표현할 뿐이다.
 select last_name, manager_id
 from employees
 where manager_id = null;
@@ -178,6 +178,7 @@ select last_name, salary
 from employees
 where manager_id is null and salary >= 20000;
 
+-- and 연산자에 not을 취한다.
 select last_name, salary
 from employees
 where not (manager_id is null and salary >= 20000);
@@ -206,6 +207,7 @@ select last_name, department_id
 from employees
 order by 2;
 
+-- alias로 정렬
 select last_name, department_id dept_id
 from employees
 order by dept_id;

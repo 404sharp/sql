@@ -24,25 +24,25 @@ where last_name = 'Higgins';
 
 select last_name
 from employees
--- lower function의 리턴값과 문자 상수를 비교한다.
+-- lower function의 리턴값과 상수를 비교한다.
 where lower(last_name) = 'higgins';
 
 select concat('Hello', 'World')
 from dual;
 
 -- 하나의 row, 세 개의 field를 파라미터로 받는다.
--- index:2번째 글자부터 시작해서 length:5개의 글자를 뽑아낸다.
+-- 2번째 글자부터 시작해서 5개의 글자를 뽑아낸다.
 select substr('HelloWorld', 2, 5)
 from dual;
 
--- index:음수값은 방향이 왼쪽이다.
+-- 음수값은 방향이 왼쪽이다.
 select substr('Hello', -1, 1)
 from dual;
 
 select length('Hello')
 from dual;
 
--- 해당하는 글자가 어느 위치(index)에 있는가
+-- 해당하는 글자가 어느 위치에 있는가
 -- 왼쪽에서 3번째
 -- 리턴값이 0보다 크면 해당 글자가 있다.
 select instr('Hello', 'l')
@@ -52,7 +52,6 @@ select instr('Hello', 'w')
 from dual;
 
 -- padding: 5자리, 남은 자리는 *로 채운다.
--- 리턴하는 데이터 타입은 character
 select lpad(salary, 5, '*')
 from employees;
 
@@ -125,8 +124,7 @@ select last_name, salary,
     round(salary * 1.155) - salary "Increase"
 from employees;
 
--- 오늘 날짜를 다루는 function. 업무에서 많이 사용된다. sysdate는 파라미터가 없다.
--- 출력 당시 날짜를 나타낸다.
+-- 날짜를 다루는 function. 현장에서 많이 사용된다. sysdate는 파라미터가 없다. 출력 당시 날짜를 나타낸다.
 select sysdate
 from dual;
 
@@ -136,7 +134,7 @@ from dual;
 select sysdate - 1
 from dual;
 
--- 기간을 알아낼 수 있다. 날짜 간격.
+-- 기간을 알아낼 수 있다.
 select sysdate - sysdate
 from dual;
 
@@ -177,10 +175,10 @@ from dual;
 --       월급은 매월 말일에 지급한다.
 select last_name, last_day(hire_date)
 from employees
-where months_between(sysdate, hire_date) >= 12 * 20;
+where months_between(sysdate, hire_date) >= 20 * 12;
 
 -- 과제: 사원들의 이름, 월급 그래프를 조회하라.
---       그래프는 $1000 당 * 하나를 표시한다.
+--       그래프는 $1000당 * 하나를 표시한다.
 select last_name, rpad(' ', salary / 1000 + 1, '*') sal
 from employees
 order by sal desc;
