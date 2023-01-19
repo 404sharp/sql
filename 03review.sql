@@ -124,7 +124,8 @@ select last_name, salary,
     round(salary * 1.155) - salary "Increase"
 from employees;
 
--- 날짜를 다루는 function. 현장에서 많이 사용된다. sysdate는 파라미터가 없다. 출력 당시 날짜를 나타낸다.
+-- 날짜를 다루는 function. 현장에서 많이 사용된다. sysdate는 파라미터가 없다.
+-- 출력 당시 날짜를 나타낸다. 가장 많이 쓰이는 single function
 select sysdate
 from dual;
 

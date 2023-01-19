@@ -67,17 +67,18 @@ select last_name,
     to_char(hire_date, 'YYYY.MM.DD') hire_date,
     to_char(next_day(add_months(hire_date, 3), 'monday'), 'YYYY.MM.DD') review_date
 from employees;
---reviewed
+-- reviewed until here
 
 -- 이제부터 숫자를 문자로 바꿔보자.
 select to_char(salary)
 from employees;
 
--- 0으로 표기하면 값이 없는 앞자리를 0으로 채운다.
+-- 0으로 표기하면 값이 없는 앞자리를 0으로 채운다. leading 0
 select to_char(salary, '$99,999.99'), to_char(salary, '$00,000.00')
 from employees
 where last_name = 'Ernst';
 
+-- leading 0
 select '|' || to_char(12.12, '9999.99') || '|',
     '|' || to_char(12.12, '0000.00') || '|'
 from dual;
@@ -87,6 +88,7 @@ select '|' || to_char(12.12, 'fm9999.99') || '|',
     '|' || to_char(12.12, 'fm0000.00') || '|'
 from dual;
 
+-- local currency
 select to_char(1237, 'L9999')
 from dual;
 
@@ -99,6 +101,7 @@ from employees;
 -- 문자를 날짜로 바꿔본다.
 select last_name, hire_date
 from employees
+-- 포맷을 지정해 준다.
 where hire_date = to_date('Sep 21, 2005', 'Mon dd, yyyy');
 
 select last_name, hire_date
@@ -111,6 +114,7 @@ from employees
 -- fx를 넣으면 포맷이 정확해야 한다. (format exact)
 where hire_date = to_date('Sep 21, 2005', 'fxMon  dd yy');
 
+-- 숫자는 우측정렬된다.
 select to_number('1237')
 from dual;
 
@@ -122,7 +126,7 @@ from dual;
 select to_number('1,237.12', '9,999.99')
 from dual;
 
--- 두 번째로 많이 쓰이는 function
+-- 두 번째로 많이 쓰이는 single function
 -- 내 테이블에서 null을 없앤다. 첫번째 파라미터가 null이면 두번째 파라미터로 바꾼다.
 -- 두 파라미터의 타입은 동일해야 한다. 같은 컬럼이므로 동일한 데이터 타입이어야 한다.
 select nvl(null, 0)
@@ -159,7 +163,7 @@ select to_char(null), to_number(null), to_date(null)
 from dual;
 
 -- coalesce는 파라미터들의 데이터 타입이 동일해야 한다.
--- 처음으로 null이 아닌 값이 리턴된다. (첫번째 파라미터, 두번째 파라미터, 세번째 파라미터 순으로)
+-- 처음으로 null이 아닌 값이 리턴된다. (첫번째 - 두번째 - 세번째 파라미터 순으로)
 select last_name, job_id,
     coalesce(to_char(commission_pct), to_char(manager_id), 'None')
 from employees;
@@ -180,7 +184,7 @@ select last_name, salary,
 from employees
 where department_id = 80;
 
--- decode의 기본값은 null이다.
+-- decode의 기본값(default)은 null이다.
 -- 기준값과 비교값의 타입은 같아야 한다. 여기서는 salary가 문자형으로 변환된다.
 select decode(salary, 'a', 1)
 from employees;
@@ -225,7 +229,7 @@ select case job_id when '1' then '1'
         end grade
 from employees;
 
--- 기준값과 비교값의 타입은 같아야 한다. salary가 숫자이므로 when 뒤에도 숫자여야 한다.
+-- 기준값과 비교값의 타입은 같아야 한다. salary가 숫자이므로 when 뒤도 숫자여야 한다.
 select case salary when 1 then '1'
                     when 2 then '2'
                     else '0'
@@ -233,7 +237,7 @@ select case salary when 1 then '1'
 from employees;
 
 select last_name, salary,
-    -- case when 옆에는 조건문이 들어간다.
+    -- case when 뒤에는 조건문이 들어간다.
     -- 여기 있는 when들은 배타적이다.
     case when salary < 5000 then 'low'
         when salary < 10000 then 'medium'
@@ -259,7 +263,8 @@ order by case day
 --       2005년 후에 입사한 사원들에게 10만원 상품권을 지급한다.
 --       사원들의 이름, 입사일, 상품권 금액을 조회하라.
 select last_name, hire_date,
-    case when hire_date <= '2005/12/31' then 1000000 
-        else 100000
-    end coupon
-from employees;
+    case when hire_date <= '2005/12/31' then '100만원'
+        else '10만원'
+    end gift
+from employees
+order by gift, hire_date;
