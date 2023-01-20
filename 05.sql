@@ -162,7 +162,6 @@ select count(case when hire_date like '2001%' then 1 else null end) "2001",
     count(case when hire_date like '2002%' then 1 else null end) "2002",
     count(case when hire_date like '2003%' then 1 else null end) "2003"
 from employees;
--- 답안4
 
 -- 과제: 직업별, 부서별 월급합을 조회하라.
 --       부서는 20, 50, 80이다.

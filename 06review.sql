@@ -6,7 +6,7 @@ select location_id, city
 from locations;
 
 -- equi join
--- 공통 컬럼을 먼저 찾는다. 그리고 같은(=)(그래서 equijoin) 데이터가 있는 row끼리 결합한다.
+-- 공통 컬럼을 먼저 찾는다. 그리고 같은(=)(그래서 equi join) 데이터가 있는 row끼리 결합한다.
 -- 여기서는 location_id가 같은 row끼리 결합한다. 나머지는 버린다.
 select department_id, department_name, location_id, city
 from departments natural join locations;
@@ -98,7 +98,6 @@ from employees e join departments d
 on e.department_id = d.department_id
 join locations l
 on d.location_id = l.location_id
--- and 조건문을 on에 걸어도 where와 마찬가지로 동작한다.
 and l.city = 'Toronto';
 
 -- non-equi join
@@ -114,7 +113,7 @@ select worker.last_name emp, manager.last_name mgr
 from employees worker join employees manager
 on worker.manager_id = manager.employee_id;
 
-select worker.last_name emp, manager.last_name mgr
+select worker.last_name emp, manager_last_name mgr
 from employees worker join employees manager
 -- 에러: 논리적 테이블이라서 접두사를 생략하면 명확성을 잃는다.
 on manager_id = employee_id;
@@ -135,14 +134,13 @@ order by 1, 2, 3;
 select e.last_name, e.hire_date
 from employees e join employees x
 on x.last_name = 'Davies'
-    and e.hire_date > x.hire_date;
+and e.hire_date > x.hire_date;
 
 -- 과제: 매니저보다 먼저 입사한 사원들의 이름, 입사일, 매니저명, 매니저 입사일을 조회하라.
 select e.last_name, e.hire_date, m.last_name, m.hire_date
 from employees e join employees m
 on e.manager_id = m.employee_id
--- 부등호가 있으므로 equi join이 아니다.
-    and e.hire_date < m.hire_date;
+and e.hire_date < m.hire_date;
 
 -- inner join
 select e.last_name, e.department_id, d.department_name
@@ -181,21 +179,21 @@ where d.location_id = l.location_id;
 select d.department_id, d.department_name, d.location_id, l.city
 from departments d, locations l
 where d.location_id = l.location_id
-    and d.department_id in (20, 50);
+and d.department_id in (20, 50);
 
 -- 과거 문법
 -- 3개 테이블 join
 select e.last_name, d.department_name, l.city
 from employees e, departments d, locations l
 where e.department_id = d.department_id
-    and d.location_id = l.location_id;
+and d.location_id = l.location_id;
 
 -- 과거 문법
 -- non-equi join
 select e.last_name, e.salary, e.job_id
 from employees e, jobs j
 where e.salary between j.min_salary and j.max_salary
-    and j.job_id = 'IT_PROG';
+and j.job_id = 'IT_PROG';
 
 select e.last_name, e.department_id, d.department_name
 from employees e, departments d

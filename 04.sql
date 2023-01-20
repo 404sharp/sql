@@ -210,6 +210,7 @@ select job_id, decode(job_id,
     'ST_CLERK', 'D') grade
 from employees;
 
+-- decode의 효과를 갖는 문법을 배워보자. case..when..then..else..end
 select last_name, job_id, salary,
     case job_id when 'IT_PROG' then 1.10 * salary
                 when 'AD_PRES' then 1.05 * salary
@@ -238,7 +239,7 @@ from employees;
 
 select last_name, salary,
     -- case when 뒤에는 조건문이 들어간다.
-    -- 여기 있는 when들은 배타적이다.
+    -- when들은 배타적이다.
     case when salary < 5000 then 'low'
         when salary < 10000 then 'medium'
         when salary < 20000 then 'high'

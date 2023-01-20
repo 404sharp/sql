@@ -126,3 +126,46 @@ group by manager_id
 having min(salary) > 6000
 -- 2번째 컬럼으로 정렬
 order by 2 desc;
+
+-- 그룹이 N개 있어야 한다. 그래야 max(avg(salary))가 의미 있다.
+select max(avg(salary))
+from employees
+-- 그러므로 group by를 사용한다.
+group by department_id;
+
+-- group function은 2번까지만 중첩된다.
+select sum(max(avg(salary)))
+from employees
+group by department_id;
+
+-- round 함수는 12번 실행된다. 리턴값도 12개다.
+select department_id, round(avg(salary))
+from employees
+group by department_id;
+
+-- 과제: 2001년, 2002년, 2003년도별 입사자 수를 조회하라.
+-- 답안1
+select to_char(hire_date, 'yyyy') hire_year, count(employee_id) emp_cnt
+from employees
+where to_char(hire_date, 'yyyy') in (2001, 2002, 2003)
+group by to_char(hire_date, 'yyyy')
+order by hire_year;
+-- 답안2
+-- 연도별 입사한 사람들에게 1을 부여해서 합산한다.
+select sum(decode(to_char(hire_date, 'yyyy'), '2001', 1, 0)) "2001",
+    sum(decode(to_char(hire_date, 'yyyy'), '2002', 1, 0)) "2002",
+    sum(decode(to_char(hire_date, 'yyyy'), '2003', 1, 0)) "2003"
+from employees;
+-- 답안3
+select count(case when hire_date like '2001%' then 1 else null end) "2001",
+    count(case when hire_date like '2002%' then 1 else null end) "2002",
+    count(case when hire_date like '2003%' then 1 else null end) "2003"
+from employees;
+
+-- 과제: 직업별, 부서별 월급합을 조회하라.
+--       부서는 20, 50, 80이다.
+select job_id, sum(decode(department_id, '20', salary)) "20",
+    sum(decode(department_id, '50', salary)) "50",
+    sum(decode(department_id, '80', salary)) "80"
+from employees
+group by job_id;
