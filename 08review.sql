@@ -26,11 +26,11 @@ from employees e
 where exists (select *
                 from job_history j
                 where e.employee_id = j.employee_id
-                    and e.job_id = j.job_id);
+                and e.job_id = j.job_id);
 -- 답안2
 select employee_id, last_name, job_id
 from employees e
-where e.job_id in (select job_id
+where e.job_id in (select j.job_id
                     from job_history j
                     where e.employee_id = j.employee_id);
 -- 답안3
