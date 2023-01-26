@@ -1,6 +1,6 @@
 drop table dept;
 
--- create: data definition language (DDL) -- 하나의 객체를 만든다.
+-- create/drop/alter: data definition language (DDL) -- 하나의 객체를 만든다.
 -- DDL은 auto commit이다.
 create table dept(
 department_id number(4),

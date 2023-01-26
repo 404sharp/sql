@@ -66,3 +66,4 @@ from user_constraints;
 select * from depts;
 
 -- system 유저로 바꾼다.
+-- (10.sql에서 계속)
