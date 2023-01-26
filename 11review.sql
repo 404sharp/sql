@@ -1,6 +1,6 @@
 -- view 객체를 다뤄보자.
 -- 테이블을 부분적으로만 노출시키기 위해 사용한다.
--- data dictionary view를 이미 봤다.
+-- data dictionary의 view를 이미 봤다.
 -- view의 정체는 코드이다. 본질은 query이다. 따라서 그 안에는 데이터가 없다.
 -- 테이블을 수정하는 것은 어렵지만 뷰를 수정하는 것은 간단하다. 코드이기 때문이다.
 
@@ -29,8 +29,8 @@ desc empvu80
 
 -- 과제: 50번 부서원들의 사번, 이름, 부서번호로 구성된 DEPT50 view를 만들어라.
 --       view 구조는 EMPNO, EMPLOYEE, DEPTNO이다.
-create or replace view DEPT50 as
-    select employee_id EMPNO, last_name EMPLOYEE, department_id DEPTNO
+create or replace view dept50 as
+    select employee_id empno, last_name employee, department_id deptno
     from employees
     where department_id = 50;
 create or replace view dept50(empno, employee, deptno) as
@@ -124,7 +124,7 @@ create sequence dept_deptid_seq
     increment by 10
     maxvalue 1000;
 
--- 과제: 위 sequence를 이용해서, DEPT 테이블에서 Education 부서를 insert하라.
+-- 과제: 위 sequence를 이용해서, DEPT 테이블에서 Education 부서를 insert 하라.
 insert into dept(department_id, department_name)
 values(
 dept_deptid_seq.nextval, 'Education'
@@ -160,7 +160,7 @@ create index dept_deptname_idx
 on dept(department_name);
 
 -- synonym
--- 서로 명칭이 통일이 되지 않을 경우 사용한다.
+-- 서로 명칭이 통일되지 않을 경우 사용한다.
 drop synonym team;
 create synonym team
 for departments;

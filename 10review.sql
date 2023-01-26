@@ -57,7 +57,7 @@ create table depts(
 -- 제약조건은 테이블이 있어야 의미 있다. 종속적인 객체이다.
 -- 제약조건 객체는 DB의 무결성을 확보하려고 쓰이는 것이다.
 -- physical하게 참이라고 판단하는 기준: primary key는 유일해야 한다.
--- 각 테이블에는 Primary Key가 반드시 있어야 한다. 무결성을 확보하기 위해서이다.
+-- 각 테이블에는 primary key가 반드시 있어야 한다. 무결성을 확보하기 위해서이다.
 department_id number(3) constraint depts_deptid_pk primary key,
 department_name varchar2(20)
 );
@@ -215,6 +215,7 @@ create table sub_departments as
 select * from sub_departments;
 
 -- 테이블 구조 변경 실습
+drop table users;
 create table users(
 user_id number(3)
 );
